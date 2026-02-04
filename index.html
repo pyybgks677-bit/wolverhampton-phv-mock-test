@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="en">
-
 <head>
   <meta name="google-adsense-account" content="ca-pub-5034027823424390">
   <meta charset="utf-8" />
@@ -8,81 +7,57 @@
   <title>Wolverhampton PHV Knowledge Mock Test</title>
   <link rel="stylesheet" href="styles.css" />
 
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5034027823424390"
-     crossorigin="anonymous"></script>
+  <!-- AdSense (ONLY on content pages) -->
+  <script async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5034027823424390"
+    crossorigin="anonymous"></script>
 </head>
 
 <body>
   <header class="container">
     <h1>Wolverhampton PHV Knowledge Mock Test</h1>
-  
+
     <p class="muted" style="max-width: 820px;">
       This mock test is designed to help prepare for the Wolverhampton PHV Knowledge Test.
       It is not affiliated with Wolverhampton City Council and should be used for practice purposes only.
     </p>
-  
+
     <p class="sub">
       Pass mark: <strong>80%</strong> · Time limit: <strong>45:00</strong>
       · Best score: <strong id="bestScore">0.0%</strong>
     </p>
-  </header> 
+  </header>
 
   <main class="container card">
-    <section id="setup">
-      <div class="row">
-        <label class="label" for="mode">Mode</label>
-        <select id="mode">
-          <option value="practice">Practice (review results + retry wrong)</option>
-          <option value="exam">Exam (results at the end)</option>
-        </select>
-      </div>
+    <h2>About this mock test</h2>
 
-      <div class="row">
-        <label class="label" for="shuffle">Shuffle questions</label>
-        <input id="shuffle" type="checkbox" checked />
-      </div>
+    <p>
+      This website provides an independent practice mock test for drivers preparing for the
+      Wolverhampton PHV Knowledge Test. The questions are presented in a multiple-choice format so you can
+      practise selecting answers and reviewing your performance.
+    </p>
 
-      <button id="startBtn" class="btn primary">Start</button>
-      <p class="hint">Tip: Use A/B/C/D keys to select. Arrow keys to move. Press F to flag.</p>
-    </section>
+    <p>
+      You can use the mock test in two modes: a practice mode that allows review of incorrect questions,
+      and an exam-style mode where results are shown at the end. The time limit shown is provided for practice.
+    </p>
 
-    <section id="quiz" class="hidden">
-      <div class="topbar">
-        <div class="pill">Time: <span id="timeLeft">45:00</span></div>
-        <div class="pill">Question: <span id="qCount">1</span>/<span id="qTotal">0</span></div>
-        <div class="pill">Answered: <span id="answeredCount">0</span></div>
-        <div class="pill">Flagged: <span id="flagCount">0</span></div>
-      </div>
+    <p>
+      This website is a practice tool only. It is not an official exam and passing this mock test does not
+      guarantee success in any official knowledge test. This website is not affiliated with or endorsed by
+      Wolverhampton City Council or any licensing authority.
+    </p>
 
-      <div id="warning" class="warning hidden"></div>
+    <div class="actions">
+      <a class="btn primary" href="quiz.html">Start the mock test</a>
+      <a class="btn" href="privacy.html">Privacy Policy</a>
+      <a class="btn" href="terms.html">Terms of Use</a>
+      <a class="btn" href="disclaimer.html">Disclaimer</a>
+    </div>
 
-      <h2 id="questionText" class="question"></h2>
-
-      <div id="options" class="options"></div>
-
-      <div class="actions">
-        <button id="flagBtn" class="btn">Flag for later</button>
-        <button id="prevBtn" class="btn">Previous</button>
-        <button id="skipBtn" class="btn">Skip</button>
-        <button id="nextBtn" class="btn">Next</button>
-        <button id="finishBtn" class="btn danger" disabled>Submit</button>
-      </div>
-
-      <p class="hint muted">
-        You can move freely and change answers. Submit is enabled only when every question has an answer.
-      </p>
-    </section>
-
-    <section id="results" class="hidden">
-      <h2>Results</h2>
-      <p id="resultSummary" class="resultSummary"></p>
-      <div id="resultActions" class="actions"></div>
-
-      <details id="reviewBox" class="hidden">
-        <summary>Review incorrect questions</summary>
-        <div id="reviewList" class="review"></div>
-      </details>
-    </section>
+    <p class="hint muted" style="margin-top: 14px;">
+      Tip: On the quiz page you can use A/B/C/D keys to select. Arrow keys to move. Press F to flag.
+    </p>
   </main>
 
   <footer class="container footer">
@@ -96,6 +71,15 @@
     </p>
   </footer>
 
-  <script src="app.js"></script>
+  <script>
+    // Best score display on homepage only (no quiz logic here)
+    (function () {
+      const LS_BEST = "wolv_phv_mock_best_score";
+      const v = localStorage.getItem(LS_BEST);
+      const n = v ? Number(v) : 0;
+      const best = Number.isFinite(n) ? n : 0;
+      document.getElementById("bestScore").textContent = best.toFixed(1) + "%";
+    })();
+  </script>
 </body>
 </html>
