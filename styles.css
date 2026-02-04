@@ -1,9 +1,29 @@
-:root { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
-body { margin: 0; background: #ffffff; color: #111827; }
+:root {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
 
-.container { max-width: 980px; margin: 0 auto; padding: 18px; }
-h1 { margin: 10px 0 6px; font-size: 28px; color: #0f172a; }
-.sub { margin: 0; color: #475569; }
+body {
+  margin: 0;
+  background: #ffffff;
+  color: #111827;
+}
+
+.container {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 18px;
+}
+
+h1 {
+  margin: 10px 0 6px;
+  font-size: 28px;
+  color: #0f172a;
+}
+
+.sub {
+  margin: 0;
+  color: #475569;
+}
 
 .card {
   background: #ffffff;
@@ -14,31 +34,96 @@ h1 { margin: 10px 0 6px; font-size: 28px; color: #0f172a; }
 }
 
 .row {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 10px 0; border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #e5e7eb;
 }
 
-.label { color: #334155; }
-select, input[type="checkbox"] { transform: scale(1.05); }
+.label {
+  color: #334155;
+}
+
+select,
+input[type="checkbox"] {
+  transform: scale(1.05);
+}
+
+/* =========================
+   BUTTONS (FIXED SIZE)
+   ========================= */
 
 .btn {
-  padding: 10px 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 12px 20px;
+  min-height: 44px;
+
   border-radius: 12px;
   border: 1px solid #cbd5e1;
   background: #f8fafc;
   color: #0f172a;
+
   cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;
 }
-.btn:hover { filter: brightness(0.98); }
-.btn:disabled { opacity: 0.45; cursor: not-allowed; }
 
-.primary { background: #2563eb; border-color: #2563eb; color: #ffffff; }
-.danger  { background: #dc2626; border-color: #dc2626; color: #ffffff; }
+.btn:hover {
+  filter: brightness(0.98);
+}
 
-.hint { color: #64748b; margin-top: 12px; }
-.hidden { display: none; }
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
 
-.topbar { display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+.primary {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
+}
+
+.danger {
+  background: #dc2626;
+  border-color: #dc2626;
+  color: #ffffff;
+}
+
+/* =========================
+   TEXT / HELPERS
+   ========================= */
+
+.hint {
+  color: #64748b;
+  margin-top: 12px;
+}
+
+.hidden {
+  display: none;
+}
+
+.muted {
+  color: #64748b;
+}
+
+/* =========================
+   QUIZ LAYOUT
+   ========================= */
+
+.topbar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
 .pill {
   background: #f1f5f9;
   border: 1px solid #e2e8f0;
@@ -56,9 +141,16 @@ select, input[type="checkbox"] { transform: scale(1.05); }
   color: #9a3412;
 }
 
-.question { font-size: 20px; line-height: 1.35; margin: 10px 0 12px; }
+.question {
+  font-size: 20px;
+  line-height: 1.35;
+  margin: 10px 0 12px;
+}
 
-.options { display: grid; gap: 10px; }
+.options {
+  display: grid;
+  gap: 10px;
+}
 
 .optionBtn {
   text-align: left;
@@ -69,17 +161,38 @@ select, input[type="checkbox"] { transform: scale(1.05); }
   color: #0f172a;
   cursor: pointer;
 }
-.optionBtn:hover { background: #f8fafc; }
+
+.optionBtn:hover {
+  background: #f8fafc;
+}
+
 .optionBtn.selected {
   border-color: #2563eb;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
-.actions { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
 
-.resultSummary { font-size: 18px; color: #0f172a; }
+.resultSummary {
+  font-size: 18px;
+  color: #0f172a;
+}
 
-.review { margin-top: 10px; display: grid; gap: 12px; }
+/* =========================
+   REVIEW
+   ========================= */
+
+.review {
+  margin-top: 10px;
+  display: grid;
+  gap: 12px;
+}
+
 .reviewItem {
   padding: 12px;
   background: #f8fafc;
@@ -87,28 +200,42 @@ select, input[type="checkbox"] { transform: scale(1.05); }
   border-radius: 12px;
 }
 
-.muted { color: #64748b; }
-.footer { padding-top: 8px; }
-a { color: #2563eb; text-decoration: none; }
-a:hover { text-decoration: underline; }
+/* =========================
+   FOOTER / LINKS
+   ========================= */
+
+.footer {
+  padding-top: 8px;
+}
+
+a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* =========================
+   QUIZ HEIGHT STABILITY
+   ========================= */
 
 #startBtn {
   margin-top: 16px;
 }
-/* Keep the action buttons in a fixed position (no jumping between questions) */
+
 #quiz {
   display: flex;
   flex-direction: column;
-  min-height: 420px; /* adjust if you want taller/shorter */
+  min-height: 420px;
 }
 
-/* Give the question + options area space to grow, and push buttons down */
 #questionText,
 #options {
   flex: 0 0 auto;
 }
 
-/* Push the button row to the bottom of the quiz card */
 #quiz .actions {
   margin-top: auto;
 }
