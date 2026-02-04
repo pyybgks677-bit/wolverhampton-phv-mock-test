@@ -5,6 +5,7 @@ const PASS_MARK = 80;
 const TIME_LIMIT_SECONDS = 45 * 60;
 
 const LS_BEST = "wolv_phv_mock_best_score";
+const LS_LAST_RESULT = "wolv_phv_last_result";
 
 // -----------------------------
 // QUESTIONS (53) - no duplicates, and no visible numbering in UI
@@ -204,7 +205,7 @@ let inReviewSession = false;
 // -----------------------------
 const elSetup = document.getElementById("setup");
 const elQuiz = document.getElementById("quiz");
-const elResults = document.getElementById("results");
+const elResults = document.getElementById("results"); // kept for structure, not used when redirecting to results.html
 
 const elMode = document.getElementById("mode");
 const elShuffle = document.getElementById("shuffle");
@@ -227,10 +228,10 @@ const elQTotal = document.getElementById("qTotal");
 const elAnsweredCount = document.getElementById("answeredCount");
 const elFlagCount = document.getElementById("flagCount");
 
-const elSummary = document.getElementById("resultSummary");
-const elResultActions = document.getElementById("resultActions");
-const elReviewBox = document.getElementById("reviewBox");
-const elReviewList = document.getElementById("reviewList");
+const elSummary = document.getElementById("resultSummary"); // kept for structure, not used when redirecting
+const elResultActions = document.getElementById("resultActions"); // kept for structure, not used when redirecting
+const elReviewBox = document.getElementById("reviewBox"); // kept for structure, not used when redirecting
+const elReviewList = document.getElementById("reviewList"); // kept for structure, not used when redirecting
 const elBest = document.getElementById("bestScore");
 
 // -----------------------------
@@ -287,6 +288,15 @@ function updateCounts() {
 function updateNavButtons() {
   elPrev.disabled = index === 0;
   elNext.disabled = index >= deck.length - 1;
+}
+
+function safeSetItem(key, value) {
+  try {
+    localStorage.setItem(key, value);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 // -----------------------------
@@ -430,65 +440,46 @@ function submitQuiz(timeUp) {
   stopTimer();
 
   const result = computeResults(deck, answers);
-
-  show(elResults);
-
   const passed = result.pct >= PASS_MARK;
-  elSummary.innerHTML =
-    `Mode: <strong>${mode.toUpperCase()}</strong><br>` +
-    `Score: <strong>${result.score}/${result.total}</strong> (${result.pct.toFixed(1)}%)<br>` +
-    `Unanswered: <strong>${result.unanswered}</strong><br>` +
-    `Result: <strong>${passed ? "PASS ✅" : "FAIL ❌"}</strong> (80% required)` +
-    (timeUp ? "<br><em>Ended because time ran out.</em>" : "");
 
+  // Save best score only for the main timed attempt (not review sessions)
   if (!inReviewSession) saveBest(result.pct);
 
-  elResultActions.innerHTML = "";
+  // Build a payload for results.html
+  const wrongPayload = result.wrong.map((item) => {
+    const q = item.q;
 
-  const btnMenu = document.createElement("button");
-  btnMenu.className = "btn primary";
-  btnMenu.textContent = "Back to menu";
-  btnMenu.onclick = () => resetToMenu();
-  elResultActions.appendChild(btnMenu);
+    const yourLetter = item.chosen;
+    const yourText = yourLetter ? q[yourLetter] : "Unanswered";
 
-  if (!inReviewSession && mode === "practice" && result.wrong.length > 0) {
-    const btnRetry = document.createElement("button");
-    btnRetry.className = "btn";
-    btnRetry.textContent = "Retry wrong questions (untimed)";
-    btnRetry.onclick = () => startRetryWrong(result.wrong.map(x => x.q));
-    elResultActions.appendChild(btnRetry);
-  }
+    const correctLetter = q.ans;
+    const correctText = q[correctLetter];
 
-  if (!inReviewSession && flaggedOrder.length > 0) {
-    const btnFlagged = document.createElement("button");
-    btnFlagged.className = "btn";
-    btnFlagged.textContent = `Review flagged questions (${flaggedOrder.length}) (untimed)`;
-    btnFlagged.onclick = () => startFlaggedReview();
-    elResultActions.appendChild(btnFlagged);
-  }
+    return {
+      question: q.q,
+      chosen: yourLetter,
+      yourText,
+      correctLetter,
+      correctText
+    };
+  });
 
-  if (result.wrong.length > 0) {
-    elReviewBox.classList.remove("hidden");
-    elReviewList.innerHTML = "";
-    result.wrong.forEach((item, i) => {
-      const div = document.createElement("div");
-      div.className = "reviewItem";
-      const yourLetter = item.chosen;
-      const yourText = yourLetter ? item.q[yourLetter] : "Unanswered";
+  const payload = {
+    mode,
+    inReviewSession: !!inReviewSession,
+    score: result.score,
+    total: result.total,
+    pct: result.pct,
+    unanswered: result.unanswered,
+    passed,
+    timeUp: !!timeUp,
+    wrong: wrongPayload
+  };
 
-      const correctLetter = item.q.ans;
-      const correctText = item.q[correctLetter];
+  safeSetItem(LS_LAST_RESULT, JSON.stringify(payload));
 
-      div.innerHTML =
-        `<strong>${i + 1}. ${item.q.q}</strong><br>` +
-        `Your answer: <strong>${yourLetter ?? "—"}</strong> — ${yourText}<br>` +
-        `Correct answer: <strong>${correctLetter}</strong> — ${correctText}`;
-      elReviewList.appendChild(div);
-    });
-  } else {
-    elReviewBox.classList.add("hidden");
-    elReviewList.innerHTML = "";
-  }
+  // Dedicated results page
+  window.location.href = "results.html";
 }
 
 function startQuiz() {
