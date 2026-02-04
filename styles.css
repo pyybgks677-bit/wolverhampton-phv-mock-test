@@ -51,7 +51,7 @@ input[type="checkbox"] {
 }
 
 /* =========================
-   BUTTONS (FIXED SIZE)
+   BUTTONS
    ========================= */
 
 .btn {
@@ -240,14 +240,17 @@ a:hover {
   margin-top: auto;
 }
 
-/* Force equal-sized action buttons (Start / Back to home) */
-.actions .btn {
-  min-width: 160px;
+/* =========================
+   START SCREEN BUTTONS (EXACT SAME SIZE)
+   Requires: <div class="actions startActions"> in quiz.html
+   ========================= */
+
+#setup .actions.startActions {
+  display: grid;                 /* override flex for this row only */
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
 }
 
-/* Make Start and Back to home exactly the same size */
-#startBtn,
-#homeBtn {
-  width: 180px;
+#setup .actions.startActions .btn {
+  width: 100%;                   /* each fills its column */
 }
-
