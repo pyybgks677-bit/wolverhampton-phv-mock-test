@@ -244,3 +244,10 @@ a:hover {
 .actions .btn {
   min-width: 160px;
 }
+
+/* Make Start and Back to home exactly the same size */
+#startBtn,
+#homeBtn {
+  width: 180px;
+}
+
