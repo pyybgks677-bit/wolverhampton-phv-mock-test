@@ -72,6 +72,7 @@ input[type="checkbox"] {
   font-weight: 500;
   line-height: 1;
   text-decoration: none;
+  box-sizing: border-box;
 }
 
 .btn:hover {
@@ -176,6 +177,7 @@ input[type="checkbox"] {
   gap: 10px;
   margin-top: 14px;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 .resultSummary {
@@ -221,10 +223,6 @@ a:hover {
    QUIZ HEIGHT STABILITY
    ========================= */
 
-#startBtn {
-  margin-top: 16px;
-}
-
 #quiz {
   display: flex;
   flex-direction: column;
@@ -241,16 +239,12 @@ a:hover {
 }
 
 /* =========================
-   START SCREEN BUTTONS (EXACT SAME SIZE)
-   Requires: <div class="actions startActions"> in quiz.html
+   START SCREEN BUTTONS
+   SAME WIDTH + SAME HEIGHT (ONLY HERE)
    ========================= */
 
-#setup .actions.startActions {
-  display: grid;                 /* override flex for this row only */
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
 #setup .actions.startActions .btn {
-  width: 100%;                   /* each fills its column */
+  width: 200px;
+  height: 48px;
+  padding: 0;            /* height controls vertical size */
 }
