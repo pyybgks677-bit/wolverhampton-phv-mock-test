@@ -239,3 +239,8 @@ a:hover {
 #quiz .actions {
   margin-top: auto;
 }
+
+/* Force equal-sized action buttons (Start / Back to home) */
+.actions .btn {
+  min-width: 160px;
+}
